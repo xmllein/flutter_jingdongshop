@@ -1,22 +1,22 @@
 // To parse this JSON data, do
 //
-//     final focusModel = focusModelFromJson(jsonString);
+//     final productModel = productModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FocusModel focusModelFromJson(String str) =>
-    FocusModel.fromJson(json.decode(str));
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJson(json.decode(str));
 
-String focusModelToJson(FocusModel data) => json.encode(data.toJson());
+String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
-class FocusModel {
+class ProductModel {
   List<Result> result;
 
-  FocusModel({
+  ProductModel({
     required this.result,
   });
 
-  factory FocusModel.fromJson(Map<String, dynamic> json) => FocusModel(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         result:
             List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
       );
@@ -29,31 +29,39 @@ class FocusModel {
 class Result {
   String id;
   String title;
-  String status;
+  String cid;
+  int price;
+  String oldPrice;
   String pic;
-  String? url;
+  String sPic;
 
   Result({
     required this.id,
     required this.title,
-    required this.status,
+    required this.cid,
+    required this.price,
+    required this.oldPrice,
     required this.pic,
-    this.url,
+    required this.sPic,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["_id"],
         title: json["title"],
-        status: json["status"],
+        cid: json["cid"],
+        price: json["price"],
+        oldPrice: json["old_price"],
         pic: json["pic"],
-        url: json["url"],
+        sPic: json["s_pic"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "title": title,
-        "status": status,
+        "cid": cid,
+        "price": price,
+        "old_price": oldPrice,
         "pic": pic,
-        "url": url,
+        "s_pic": sPic,
       };
 }

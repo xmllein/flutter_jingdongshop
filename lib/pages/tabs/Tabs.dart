@@ -16,9 +16,13 @@ class _TabsState extends State<Tabs> {
 
   //页面
   final List<Widget> _pageList = [
+    // 首页
     const HomePage(),
+    // 分类
     const CategoryPage(),
+    // 购物车
     const CartPage(),
+    // 个人中心
     const UserPage(),
   ];
 
