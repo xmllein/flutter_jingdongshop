@@ -12,7 +12,14 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
+  var _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+  }
 
   //页面
   final List<Widget> _pageList = [
@@ -40,12 +47,16 @@ class _TabsState extends State<Tabs> {
       appBar: AppBar(
         title: Text(_titleList[_currentIndex]),
       ),
-      body: _pageList[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+        children: _pageList,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
+            _pageController.jumpToPage(index);
           });
         },
         type: BottomNavigationBarType.fixed,

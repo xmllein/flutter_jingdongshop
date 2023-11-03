@@ -15,7 +15,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   // 轮播数据
   List _focusData = [];
 
@@ -24,6 +25,10 @@ class _HomePageState extends State<HomePage> {
 
   // 获取热门推荐商品
   List _bestProductData = [];
+
+  // 状态保持
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   initState() {
