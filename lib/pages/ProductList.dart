@@ -21,7 +21,7 @@ class _ProductListPageState extends State<ProductListPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // 用于上拉分页
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   // 分页
   int _page = 1;
@@ -40,6 +40,35 @@ class _ProductListPageState extends State<ProductListPage> {
 
   // 是否有数据
   bool _hasMore = true;
+
+  // 二级导航数据
+  final List _subHeaderList = [
+    {
+      "id": 1,
+      "title": "综合",
+      "fileds": "all",
+      "sort": -1, // 排序 1 升序，price_1 {price:1}  降序： price_-1 {price:-1}
+    },
+    {
+      "id": 2,
+      "title": "销量",
+      "fileds": "salecount",
+      "sort": -1,
+    },
+    {
+      "id": 3,
+      "title": "价格",
+      "fileds": "price",
+      "sort": -1,
+    },
+    {
+      "id": 4,
+      "title": "筛选",
+    }
+  ];
+
+  // 初始化选中二级菜单
+  int _selectHeaderId = 1;
 
   @override
   void initState() {
@@ -126,7 +155,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       flex: 1,
                       child: Container(
                         height: ScreenAdaper.height(180),
-                        margin: EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +193,8 @@ class _ProductListPageState extends State<ProductListPage> {
                             ),
                             Text(
                               "¥${_productListData[index].price}",
-                              style: TextStyle(color: Colors.red, fontSize: 16),
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 16),
                             ),
                           ],
                         ),
@@ -186,6 +216,25 @@ class _ProductListPageState extends State<ProductListPage> {
     }
   }
 
+  // 二级导航图标
+  Widget _showIcon(id) {
+    if (id == 2 || id == 3) {
+      return _selectHeaderId == id
+          ? Icon(
+              _subHeaderList[_selectHeaderId - 1]["sort"] > 0
+                  ? Icons.arrow_drop_up
+                  : Icons.arrow_drop_down,
+              color: Colors.red,
+            )
+          : const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black54,
+            );
+    } else {
+      return Text("");
+    }
+  }
+
   // 筛选导航
   Widget _subHeaderWidget() {
     return Positioned(
@@ -195,75 +244,48 @@ class _ProductListPageState extends State<ProductListPage> {
       child: Container(
         height: ScreenAdaper.height(80),
         width: ScreenAdaper.width(750),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             bottom: BorderSide(
               width: 1,
-              color: const Color(0xffe8e8e8),
+              color: Color(0xffe8e8e8),
             ),
           ),
         ),
         child: Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    0,
-                    ScreenAdaper.width(20),
-                    0,
-                    ScreenAdaper.height(20),
-                  ),
-                  child: Text(
-                    "综合",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    0,
-                    ScreenAdaper.width(20),
-                    0,
-                    ScreenAdaper.height(20),
-                  ),
-                  child: Text(
-                    "销量",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    0,
-                    ScreenAdaper.width(20),
-                    0,
-                    ScreenAdaper.height(20),
-                  ),
-                  child: Text(
-                    "价格",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
+          children: _subHeaderList.map((value) {
+            return Expanded(
               child: InkWell(
                 onTap: () {
-                  // 打开抽屉
-                  _scaffoldKey.currentState!.openEndDrawer();
+                  if (value["id"] == 4) {
+                    // 打开抽屉
+                    _scaffoldKey.currentState!.openEndDrawer();
+                    setState(() {
+                      _selectHeaderId = value["id"];
+                    });
+                    return;
+                  }
+                  setState(() {
+                    // 点击二级导航
+                    _selectHeaderId = value["id"];
+                    // 获取排序
+                    _sort =
+                        "${_subHeaderList[_selectHeaderId - 1]["fileds"]}_${_subHeaderList[_selectHeaderId - 1]["sort"]}";
+                    // 重置分页
+                    _page = 1;
+                    // 重置数据
+                    _productListData = [];
+                    // 升降序切换
+                    _subHeaderList[_selectHeaderId - 1]["sort"] =
+                        _subHeaderList[_selectHeaderId - 1]["sort"] * -1;
+
+                    // 回到顶部
+                    _scrollController.jumpTo(0);
+                    // 重置开关
+                    _hasMore = true;
+                    // 获取商品列表数据
+                    _getProductListData();
+                  });
                 },
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -272,14 +294,25 @@ class _ProductListPageState extends State<ProductListPage> {
                     0,
                     ScreenAdaper.height(20),
                   ),
-                  child: const Text(
-                    "筛选",
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${value["title"]}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: _selectHeaderId == value['id']
+                              ? Colors.red
+                              : Colors.black54,
+                        ),
+                      ),
+                      _showIcon(value["id"]),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+            );
+          }).toList(),
         ),
       ),
     );
@@ -292,12 +325,10 @@ class _ProductListPageState extends State<ProductListPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: const Text("商品列表"),
-        actions: [Text("")],
+        actions: const [Text("")],
       ),
-      endDrawer: Drawer(
-        child: Container(
-          child: Text("实现筛选功能"),
-        ),
+      endDrawer: const Drawer(
+        child: Text("实现筛选功能"),
       ),
       body: Stack(
         children: [
