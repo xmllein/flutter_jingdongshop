@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/model/CateModel.dart';
 
 import '../../services/ScreenAdaper.dart';
 
@@ -13,6 +15,140 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   int _selectIndex = 0;
 
+  // 左侧数据
+  List _leftCateData = [];
+
+  // 右侧数据
+  List _rightCateData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // 左侧数据
+    _getLeftCateData();
+  }
+
+  // 获取左侧数据
+  _getLeftCateData() async {
+    var api = "${Config.domain}api/pcate";
+    var result = await Dio().get(api);
+    var leftCateList = CateModel.fromJson(result.data);
+    setState(() {
+      _leftCateData = leftCateList.result;
+    });
+
+    // 请求右侧数据
+    _getRightCateData(leftCateList.result[0].id);
+  }
+
+  // 左侧侧栏
+  Widget _leftCateWidget(leftWidth) {
+    if (_leftCateData.isNotEmpty) {
+      return SizedBox(
+        width: leftWidth,
+        height: double.infinity,
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectIndex = index;
+                      _getRightCateData(_leftCateData[index].id);
+                    });
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: ScreenAdaper.height(84),
+                    padding: EdgeInsets.only(top: ScreenAdaper.height(30)),
+                    color: _selectIndex == index
+                        ? const Color.fromRGBO(240, 246, 246, 0.9)
+                        : Colors.white,
+                    child: Text(
+                      "${_leftCateData[index].title}",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                const Divider(
+                  height: 1,
+                ),
+              ],
+            );
+          },
+          itemCount: _leftCateData.length,
+        ),
+      );
+    } else {
+      return SizedBox(
+        width: leftWidth,
+        height: double.infinity,
+      );
+    }
+  }
+
+  // 获取右侧分类数据
+  _getRightCateData(id) async {
+    var api = "${Config.domain}api/pcate?pid=${id}";
+    var result = await Dio().get(api);
+    var rightCateList = CateModel.fromJson(result.data);
+    setState(() {
+      _rightCateData = rightCateList.result;
+    });
+  }
+
+  Widget _rightCateWidget(rightItemWdith, rightItemHeight) {
+    if (_rightCateData.isNotEmpty) {
+      return Expanded(
+        flex: 1,
+        child: Container(
+          padding: EdgeInsets.all(10),
+          height: double.infinity,
+          color: const Color.fromRGBO(240, 246, 246, 0.9),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: rightItemWdith / rightItemHeight,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) {
+              // 图片转换格式
+              String pic = _rightCateData[index].pic;
+              pic = Config.domain + pic.replaceAll('\\', '/');
+              return Column(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: Image.network(
+                      pic,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(
+                    height: ScreenAdaper.height(28),
+                    child: Text("${_rightCateData[index].title}"),
+                  )
+                ],
+              );
+            },
+            itemCount: _rightCateData.length,
+          ),
+        ),
+      );
+    } else {
+      return Expanded(
+        flex: 1,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          height: double.infinity,
+          color: const Color.fromRGBO(240, 246, 246, 0.9),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 初始化屏幕适配
@@ -20,80 +156,16 @@ class _CategoryPageState extends State<CategoryPage> {
 
     // 计算GridView 宽高比
     var leftWidth = ScreenAdaper.getScreenWidth() / 4;
-    var rightItemWdith =
+    var rightItemWidth =
         (ScreenAdaper.getScreenWidth() - leftWidth - 20 - 20) / 3;
-    rightItemWdith = ScreenAdaper.width(rightItemWdith);
-    var rightItemHeight = rightItemWdith + ScreenAdaper.height(28);
+    rightItemWidth = ScreenAdaper.width(rightItemWidth);
+    var rightItemHeight = rightItemWidth + ScreenAdaper.height(28);
 
     return Scaffold(
       body: Row(
         children: [
-          Container(
-              width: leftWidth,
-              height: double.infinity,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _selectIndex = index;
-                          });
-                        },
-                        child: Container(
-                          child: Text(
-                            "第${index}条",
-                            textAlign: TextAlign.center,
-                          ),
-                          width: double.infinity,
-                          height: ScreenAdaper.height(56),
-                          color:
-                              _selectIndex == index ? Colors.red : Colors.white,
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  );
-                },
-                itemCount: 28,
-              )),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              height: double.infinity,
-              color: Color.fromRGBO(240, 246, 246, 0.9),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: rightItemWdith / rightItemHeight,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: Column(
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 1 / 1,
-                          child: Image.network(
-                            "https://www.itying.com/images/flutter/list8.jpg",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          child: Text("女装"),
-                          height: ScreenAdaper.height(28),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 18,
-              ),
-            ),
-          )
+          _leftCateWidget(leftWidth),
+          _rightCateWidget(rightItemWidth, rightItemHeight)
         ],
       ),
     );
