@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_jdshop/config/Config.dart';
 import 'package:flutter_jdshop/model/ProductModel.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import '../../services/ScreenAdaper.dart';
+import '../../services/ScreenAdapter.dart';
 
 // 轮播数据模型
 import '../../model/FocusModel.dart';
@@ -80,14 +80,14 @@ class _HomePageState extends State<HomePage>
   // 标题组件
   Widget _titleBuilder(String title) {
     return Container(
-      height: ScreenAdaper.height(32),
-      margin: EdgeInsets.only(left: ScreenAdaper.width(20)),
-      padding: EdgeInsets.only(left: ScreenAdaper.width(20)),
+      height: ScreenAdapter.height(32),
+      margin: EdgeInsets.only(left: ScreenAdapter.width(20)),
+      padding: EdgeInsets.only(left: ScreenAdapter.width(20)),
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
             color: Colors.red,
-            width: ScreenAdaper.width(10),
+            width: ScreenAdapter.width(10),
           ),
         ),
       ),
@@ -95,8 +95,8 @@ class _HomePageState extends State<HomePage>
         title,
         style: TextStyle(
           color: Colors.black54,
-          fontSize: ScreenAdaper.size(24),
-          height: ScreenAdaper.height(2.4),
+          fontSize: ScreenAdapter.size(24),
+          height: ScreenAdapter.height(2.4),
         ),
       ),
     );
@@ -116,8 +116,8 @@ class _HomePageState extends State<HomePage>
   Widget _hotProductList() {
     if (_hotProductData.isNotEmpty) {
       return Container(
-        height: ScreenAdaper.height(234),
-        padding: EdgeInsets.all(ScreenAdaper.width(20)),
+        height: ScreenAdapter.height(234),
+        padding: EdgeInsets.all(ScreenAdapter.width(20)),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
@@ -127,21 +127,21 @@ class _HomePageState extends State<HomePage>
             return Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: ScreenAdaper.width(21)),
-                  height: ScreenAdaper.height(140),
-                  width: ScreenAdaper.width(140),
+                  margin: EdgeInsets.only(right: ScreenAdapter.width(21)),
+                  height: ScreenAdapter.height(140),
+                  width: ScreenAdapter.width(140),
                   child: Image.network(
                     pic,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Container(
-                  height: ScreenAdaper.height(44),
+                  height: ScreenAdapter.height(44),
                   alignment: Alignment.center,
                   child: Text(
                     '商品名称${index + 1}',
                     style: TextStyle(
-                      fontSize: ScreenAdaper.size(24),
+                      fontSize: ScreenAdapter.size(24),
                     ),
                   ),
                 ),
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage>
   // 热门推荐
   _recProductList() {
     // itemWidth
-    double itemWidth = (ScreenAdaper.getScreenWidth() - 30) / 2;
+    double itemWidth = (ScreenAdapter.getScreenWidth() - 30) / 2;
     if (_bestProductData.isNotEmpty) {
       return Container(
         padding: const EdgeInsets.all(10),
@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage>
               child: Column(
                 children: [
                   SizedBox(
-                    height: ScreenAdaper.height(280),
+                    height: ScreenAdapter.height(280),
                     // 自适应宽度
                     width: double.infinity,
                     child: AspectRatio(
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage>
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Colors.black54,
-                        fontSize: ScreenAdaper.size(24),
+                        fontSize: ScreenAdapter.size(24),
                       ),
                     ),
                   ),
@@ -224,7 +224,7 @@ class _HomePageState extends State<HomePage>
                           '¥${value.price}',
                           style: TextStyle(
                             color: Colors.red,
-                            fontSize: ScreenAdaper.size(26),
+                            fontSize: ScreenAdapter.size(26),
                           ),
                         ),
                       ),
@@ -234,7 +234,7 @@ class _HomePageState extends State<HomePage>
                           '¥{value.old_price}',
                           style: TextStyle(
                             color: Colors.black54,
-                            fontSize: ScreenAdaper.size(22),
+                            fontSize: ScreenAdapter.size(22),
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     // 初始化屏幕适配
-    ScreenAdaper.init(context);
+    ScreenAdapter.init(context);
     return Scaffold(
       body: Center(
         child: ListView(

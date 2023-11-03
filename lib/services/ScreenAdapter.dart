@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 适配屏幕类
 
-class ScreenAdaper {
+class ScreenAdapter {
   static init(context) {
     // 初始化屏幕适配
     ScreenUtil.init(context, designSize: const Size(750, 1334));

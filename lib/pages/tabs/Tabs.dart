@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/services/ScreenAdapter.dart';
 import 'Home.dart';
 import 'Category.dart';
 import 'Cart.dart';
@@ -12,7 +13,7 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   var _pageController;
 
   @override
@@ -43,13 +44,81 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenAdapter.init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titleList[_currentIndex]),
+        title: Container(
+          child: InkWell(
+            onTap: () {
+              // 跳转到搜索
+              Navigator.pushNamed(context, '/search');
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    height: ScreenAdapter.height(56),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(233, 233, 233, 0.8),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.search,
+                          size: 24,
+                          color: Colors.black87,
+                        ),
+                        Text(
+                          '笔记本',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.center_focus_weak,
+            size: 28,
+            color: Colors.black87,
+          ),
+          onPressed: () {
+            print('扫一扫');
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.message,
+              size: 28,
+              color: Colors.black87,
+            ),
+            onPressed: () {
+              print('消息');
+            },
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,
         children: _pageList,
+        onPageChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        // 不滑动
+        physics: const NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

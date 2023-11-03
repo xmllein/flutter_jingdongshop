@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/config/Config.dart';
 import 'package:flutter_jdshop/model/CateModel.dart';
 
-import '../../services/ScreenAdaper.dart';
+import '../../services/ScreenAdapter.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -65,8 +65,8 @@ class _CategoryPageState extends State<CategoryPage>
                   },
                   child: Container(
                     width: double.infinity,
-                    height: ScreenAdaper.height(84),
-                    padding: EdgeInsets.only(top: ScreenAdaper.height(30)),
+                    height: ScreenAdapter.height(84),
+                    padding: EdgeInsets.only(top: ScreenAdapter.height(30)),
                     color: _selectIndex == index
                         ? const Color.fromRGBO(240, 246, 246, 0.9)
                         : Colors.white,
@@ -138,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage>
                       ),
                     ),
                     SizedBox(
-                      height: ScreenAdaper.height(28),
+                      height: ScreenAdapter.height(28),
                       child: Text("${_rightCateData[index].title}"),
                     )
                   ],
@@ -164,14 +164,14 @@ class _CategoryPageState extends State<CategoryPage>
   @override
   Widget build(BuildContext context) {
     // 初始化屏幕适配
-    ScreenAdaper.init(context);
+    ScreenAdapter.init(context);
 
     // 计算GridView 宽高比
-    var leftWidth = ScreenAdaper.getScreenWidth() / 4;
+    var leftWidth = ScreenAdapter.getScreenWidth() / 4;
     var rightItemWidth =
-        (ScreenAdaper.getScreenWidth() - leftWidth - 20 - 20) / 3;
-    rightItemWidth = ScreenAdaper.width(rightItemWidth);
-    var rightItemHeight = rightItemWidth + ScreenAdaper.height(28);
+        (ScreenAdapter.getScreenWidth() - leftWidth - 20 - 20) / 3;
+    rightItemWidth = ScreenAdapter.width(rightItemWidth);
+    var rightItemHeight = rightItemWidth + ScreenAdapter.height(28);
 
     return Scaffold(
       body: Row(

@@ -24,6 +24,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: '/', //初始化的时候加载的路由
       onGenerateRoute: onGenerateRoute,
+      // 设置主题颜色
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: Colors.white,
+          onPrimary: Colors.black,
+        ),
+      ),
     );
   }
 }
