@@ -108,7 +108,7 @@ class _CategoryPageState extends State<CategoryPage>
       return Expanded(
         flex: 1,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           height: double.infinity,
           color: const Color.fromRGBO(240, 246, 246, 0.9),
           child: GridView.builder(
@@ -122,20 +122,27 @@ class _CategoryPageState extends State<CategoryPage>
               // 图片转换格式
               String pic = _rightCateData[index].pic;
               pic = Config.domain + pic.replaceAll('\\', '/');
-              return Column(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Image.network(
-                      pic,
-                      fit: BoxFit.cover,
+              return InkWell(
+                onTap: () {
+                  // 跳转到商品列表页面
+                  Navigator.pushNamed(context, '/productList',
+                      arguments: {"cid": _rightCateData[index].id});
+                },
+                child: Column(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: Image.network(
+                        pic,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: ScreenAdaper.height(28),
-                    child: Text("${_rightCateData[index].title}"),
-                  )
-                ],
+                    SizedBox(
+                      height: ScreenAdaper.height(28),
+                      child: Text("${_rightCateData[index].title}"),
+                    )
+                  ],
+                ),
               );
             },
             itemCount: _rightCateData.length,

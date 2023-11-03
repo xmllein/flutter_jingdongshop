@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/pages/ProductList.dart';
 import '../pages/tabs/Tabs.dart';
+
 // 引入Search 页面
 import '../pages/Search.dart';
+// 商品列表页面
 
 // 配置路由
 final routes = {
   '/': (context) => const Tabs(),
   '/search': (context, {arguments}) => SearchPage(arguments: arguments),
+  '/productList': (context, {arguments}) =>
+      ProductListPage(arguments: arguments),
 };
 
 // 固定写法
