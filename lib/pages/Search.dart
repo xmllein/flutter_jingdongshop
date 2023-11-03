@@ -27,7 +27,10 @@ class _SearchPageState extends State<SearchPage> {
               border: InputBorder.none,
               hintText: '请输入搜索内容',
               hintStyle: TextStyle(fontSize: ScreenAdapter.size(28)),
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: const Icon(
+                Icons.search,
+                color: Colors.black54,
+              ),
             ),
           ),
         ),
@@ -40,14 +43,129 @@ class _SearchPageState extends State<SearchPage> {
               height: ScreenAdapter.height(68),
               width: ScreenAdapter.width(80),
               child: Row(
-                children: [Text("搜索")],
+                children: [
+                  Text(
+                    "搜索",
+                  )
+                ],
               ),
             ),
           )
         ],
       ),
-      body: const Center(
-        child: Text('Search Page'),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: ListView(
+          children: <Widget>[
+            Container(
+              child: Text("热搜", style: TextStyle(fontSize: 20)),
+            ),
+            Divider(),
+            Wrap(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("笔记本电脑"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装111"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装"),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("女装"),
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            Container(
+              child: Text("历史记录", style: TextStyle(fontSize: 20)),
+            ),
+            Divider(),
+            Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text("女装"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("女装"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("男装"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("手机"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("鞋子"),
+                ),
+                Divider(),
+              ],
+            ),
+            SizedBox(height: 100),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                width: ScreenAdapter.width(400),
+                height: ScreenAdapter.height(64),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black45, width: 1)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[Icon(Icons.delete), Text("清空历史记录")],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
