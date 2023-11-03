@@ -30,8 +30,8 @@ class Result {
   String id;
   String title;
   String cid;
-  int price;
-  String oldPrice;
+  dynamic price;
+  dynamic oldPrice;
   String pic;
   String sPic;
 
