@@ -61,7 +61,8 @@ class _TabsState extends State<Tabs> {
                     padding: const EdgeInsets.only(left: 10),
                     height: ScreenAdapter.height(56),
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(233, 233, 233, 0.8),
+                      // color: const Color.fromRGBO(233, 233, 233, 0.8),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Row(
@@ -90,7 +91,6 @@ class _TabsState extends State<Tabs> {
           icon: const Icon(
             Icons.center_focus_weak,
             size: 28,
-            color: Colors.black87,
           ),
           onPressed: () {
             print('扫一扫');
@@ -101,7 +101,6 @@ class _TabsState extends State<Tabs> {
             icon: const Icon(
               Icons.message,
               size: 28,
-              color: Colors.black87,
             ),
             onPressed: () {
               print('消息');

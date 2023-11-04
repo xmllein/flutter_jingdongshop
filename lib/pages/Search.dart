@@ -37,14 +37,14 @@ class _SearchPageState extends State<SearchPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("提示信息!"),
-            content: Text("您确定要删除吗?"),
+            title: const Text("提示信息!"),
+            content: const Text("您确定要删除吗?"),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context, "Cancle");
                 },
-                child: Text(
+                child: const Text(
                   "取消",
                   style: TextStyle(color: Colors.black87),
                 ),
@@ -56,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
                   _getHistoryListData();
                   Navigator.pop(context, "Ok");
                 },
-                child: Text(
+                child: const Text(
                   "确定",
                   style: TextStyle(color: Colors.black87),
                 ),
@@ -68,60 +68,55 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget _historyListWidget() {
     if (_historyListData.isNotEmpty) {
-      return Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              child: Text("历史记录", style: TextStyle(fontSize: 20)),
-            ),
-            Divider(),
-            Column(
-              children: _historyListData.map((value) {
-                return Column(
-                  children: [
-                    ListTile(
-                        title: Text("${value}"),
-                        onLongPress: () {
-                          // 长按删除
-                          _alertDialog(value);
-                        },
-                        onTap: () {
-                          // 搜索,跳转到商品列表传递参数(替换)
-                          Navigator.pushReplacementNamed(
-                              context, '/productList',
-                              arguments: {"keywords": value});
-                        }),
-                    Divider()
-                  ],
-                );
-              }).toList(),
-            ),
-            SizedBox(height: 100),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    // 清空历史记录
-                    SearchServices.clearHistoryList();
-                    _getHistoryListData();
-                  },
-                  child: Container(
-                    width: ScreenAdapter.width(400),
-                    height: ScreenAdapter.height(64),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black45, width: 1)),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[Icon(Icons.delete), Text("清空历史记录")],
-                    ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("历史记录", style: TextStyle(fontSize: 20)),
+          const Divider(),
+          Column(
+            children: _historyListData.map((value) {
+              return Column(
+                children: [
+                  ListTile(
+                      title: Text("${value}"),
+                      onLongPress: () {
+                        // 长按删除
+                        _alertDialog(value);
+                      },
+                      onTap: () {
+                        // 搜索,跳转到商品列表传递参数(替换)
+                        Navigator.pushReplacementNamed(context, '/productList',
+                            arguments: {"keywords": value});
+                      }),
+                  const Divider()
+                ],
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 100),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  // 清空历史记录
+                  SearchServices.clearHistoryList();
+                  _getHistoryListData();
+                },
+                child: Container(
+                  width: ScreenAdapter.width(400),
+                  height: ScreenAdapter.height(64),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black45, width: 1)),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Icon(Icons.delete), Text("清空历史记录")],
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ],
+          )
+        ],
       );
     } else {
       return Text("");
@@ -137,7 +132,8 @@ class _SearchPageState extends State<SearchPage> {
           padding: const EdgeInsets.only(left: 10),
           height: ScreenAdapter.height(56),
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(233, 233, 233, 0.8),
+            // color: const Color.fromRGBO(233, 233, 233, 0.8),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(18),
           ),
           child: TextField(
@@ -149,7 +145,7 @@ class _SearchPageState extends State<SearchPage> {
             },
             // textAlign: TextAlign.center,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
               hintText: '请输入搜索内容',
@@ -178,6 +174,7 @@ class _SearchPageState extends State<SearchPage> {
                 children: [
                   Text(
                     "搜索",
+                    style: TextStyle(fontSize: 16),
                   )
                 ],
               ),

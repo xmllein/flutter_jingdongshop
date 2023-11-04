@@ -373,7 +373,8 @@ class _ProductListPageState extends State<ProductListPage> {
           padding: const EdgeInsets.only(left: 10),
           height: ScreenAdapter.height(56),
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(233, 233, 233, 0.8),
+            // color: const Color.fromRGBO(233, 233, 233, 0.8),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(18),
           ),
           child: TextField(
@@ -387,9 +388,9 @@ class _ProductListPageState extends State<ProductListPage> {
             decoration: InputDecoration(
               // border: InputBorder.none,
               hintText: '请输入搜索内容',
-              contentPadding: EdgeInsets.all(0),
+              contentPadding: const EdgeInsets.all(0),
               hintStyle: TextStyle(fontSize: ScreenAdapter.size(28)),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
               prefixIcon: const Icon(
@@ -413,6 +414,10 @@ class _ProductListPageState extends State<ProductListPage> {
                 children: [
                   Text(
                     "搜索",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
                   )
                 ],
               ),

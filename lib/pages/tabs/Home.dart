@@ -180,68 +180,75 @@ class _HomePageState extends State<HomePage>
             // 图片转换格式
             String pic = value.pic;
             pic = Config.domain + pic.replaceAll('\\', '/');
-            return Container(
-              padding: const EdgeInsets.all(5),
-              width: itemWidth,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromRGBO(233, 233, 233, 0.9),
-                  width: 1,
+            return InkWell(
+              onTap: () {
+                // 路由跳转
+                Navigator.pushNamed(context, '/productContent',
+                    arguments: {'id': value.id});
+              },
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                width: itemWidth,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromRGBO(233, 233, 233, 0.9),
+                    width: 1,
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: ScreenAdapter.height(280),
-                    // 自适应宽度
-                    width: double.infinity,
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: Image.network(
-                        pic,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      value.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: ScreenAdapter.size(24),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Stack(children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '¥${value.price}',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: ScreenAdapter.size(26),
-                          ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: ScreenAdapter.height(280),
+                      // 自适应宽度
+                      width: double.infinity,
+                      child: AspectRatio(
+                        aspectRatio: 1 / 1,
+                        child: Image.network(
+                          pic,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '¥{value.old_price}',
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: ScreenAdapter.size(22),
-                            decoration: TextDecoration.lineThrough,
-                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        value.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: ScreenAdapter.size(24),
                         ),
                       ),
-                    ]),
-                  ),
-                ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Stack(children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '¥${value.price}',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: ScreenAdapter.size(26),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '¥{value.old_price}',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: ScreenAdapter.size(22),
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
               ),
             );
           }).toList(),

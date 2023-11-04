@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'pages/tabs/Tabs.dart';
 //引入路由配置文件
@@ -26,9 +27,19 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: onGenerateRoute,
       // 设置主题颜色
       theme: ThemeData(
-        colorScheme: const ColorScheme.light(
-          primary: Colors.white,
-          onPrimary: Colors.black,
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: Colors.lightBlue[800],
+
+        // Define the default font family.
+        // fontFamily: 'Georgia',
+
+        // Define the default `TextTheme`. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(fontSize: 36, fontStyle: FontStyle.italic),
+          bodyMedium: TextStyle(fontSize: 14, fontFamily: 'Hind'),
         ),
       ),
     );
