@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../services/ScreenAdapter.dart';
+import '../../widget/JdButton.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -10,6 +11,217 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  _attrBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (contex) {
+        return GestureDetector(
+          //解决showModalBottomSheet点击消失的问题
+          onTap: () {
+            return null;
+          },
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(ScreenAdapter.width(20)),
+                child: ListView(
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Wrap(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenAdapter.width(100),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: ScreenAdapter.height(22)),
+                                child: Text("颜色: ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenAdapter.width(610),
+                              child: Wrap(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenAdapter.width(100),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: ScreenAdapter.height(22)),
+                                child: Text("风格: ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenAdapter.width(610),
+                              child: Wrap(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenAdapter.width(100),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: ScreenAdapter.height(22)),
+                                child: Text("尺寸: ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenAdapter.width(610),
+                              child: Wrap(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Chip(
+                                      label: Text("白色"),
+                                      padding: EdgeInsets.all(10),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 26,
+                width: ScreenAdapter.width(750),
+                height: ScreenAdapter.height(76),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: JdButton(
+                          color: Color.fromRGBO(253, 1, 0, 0.9),
+                          text: "加入购物车",
+                          cb: () {
+                            print('加入购物车');
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: JdButton(
+                            color: Color.fromRGBO(255, 165, 0, 0.9),
+                            text: "立即购买",
+                            cb: () {
+                              print('立即购买');
+                            },
+                          )),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,11 +285,16 @@ class _ProductPageState extends State<ProductPage> {
           Container(
             margin: const EdgeInsets.only(top: 10),
             height: ScreenAdapter.height(80),
-            child: Row(
-              children: <Widget>[
-                Text("已选: ", style: TextStyle(fontWeight: FontWeight.bold)),
-                Text("115，黑色，XL，1件")
-              ],
+            child: InkWell(
+              onTap: () {
+                _attrBottomSheet();
+              },
+              child: Row(
+                children: <Widget>[
+                  Text("已选: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("115，黑色，XL，1件")
+                ],
+              ),
             ),
           ),
           const Divider(),
