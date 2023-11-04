@@ -5,6 +5,9 @@ import '../../config/Config.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../widget/JdButton.dart';
 
+//广播
+import '../../services/EventBus.dart';
+
 class ProductPage extends StatefulWidget {
   final List _productContentList;
 
@@ -18,17 +21,32 @@ class _ProductPageState extends State<ProductPage>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
   // 详情页面数据
   late ProductItemModel _productContent;
 
   // 属性
   late List _attr = [];
 
+  // 监听广播
+  var actionEventBus;
+
   @override
   initState() {
     super.initState();
     _productContent = widget._productContentList[0];
     _attr = _productContent.attr;
+
+    actionEventBus = eventBus.on<ProductContentEvent>().listen((str) {
+      _attrBottomSheet();
+    });
+  }
+
+  //销毁
+  @override
+  void dispose() {
+    super.dispose();
+    actionEventBus.cancel(); //取消事件监听
   }
 
   List<Widget> _getAttrItemWidget(attrItem) {

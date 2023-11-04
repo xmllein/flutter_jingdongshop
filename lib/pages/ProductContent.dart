@@ -10,6 +10,9 @@ import 'package:flutter_jdshop/widget/LoadingWidget.dart';
 
 import '../widget/JdButton.dart';
 
+// 广播
+import '../services/EventBus.dart';
+
 class ProductContentPage extends StatefulWidget {
   final Map arguments;
 
@@ -139,7 +142,12 @@ class _ProductContentPageState extends State<ProductContentPage> {
                               color: const Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
                               cb: () {
-                                print('加入购物车');
+                                if (_productContentList[0].attr.length > 0) {
+                                  //广播 弹出筛选
+                                  eventBus.fire(ProductContentEvent('加入购物车'));
+                                } else {
+                                  print("加入购物车操作");
+                                }
                               },
                             ),
                           ),
@@ -149,7 +157,12 @@ class _ProductContentPageState extends State<ProductContentPage> {
                               color: const Color.fromRGBO(255, 165, 0, 0.9),
                               text: "立即购买",
                               cb: () {
-                                print('立即购买');
+                                if (_productContentList[0].attr.length > 0) {
+                                  //广播 弹出筛选
+                                  eventBus.fire(ProductContentEvent('立即购买'));
+                                } else {
+                                  print("立即购买");
+                                }
                               },
                             ),
                           )
