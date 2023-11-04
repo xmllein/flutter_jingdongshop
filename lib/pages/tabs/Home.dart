@@ -237,7 +237,7 @@ class _HomePageState extends State<HomePage>
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            '¥{value.old_price}',
+                            "¥${value.oldPrice}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: ScreenAdapter.size(22),
