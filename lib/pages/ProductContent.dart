@@ -105,14 +105,16 @@ class _ProductContentPageState extends State<ProductContentPage> {
                   TabBarView(children: [
                     // 消除警告
                     ProductPage(_productContentList),
-                    ProductDetailPage(),
+                    ProductDetailPage(_productContentList),
                     ProductCommentPage(),
                   ]),
                   Positioned(
                     width: ScreenAdapter.width(750),
-                    height: ScreenAdapter.width(92),
-                    bottom: 26,
+                    height: ScreenAdapter.width(146),
+                    bottom: 0,
                     child: Container(
+                      padding:
+                          EdgeInsets.only(bottom: ScreenAdapter.height(26)),
                       decoration: const BoxDecoration(
                           border: Border(
                               top: BorderSide(color: Colors.black26, width: 1)),
@@ -123,7 +125,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
                             padding:
                                 EdgeInsets.only(top: ScreenAdapter.height(10)),
                             width: 100,
-                            height: ScreenAdapter.height(88),
+                            height: ScreenAdapter.height(146),
                             child: const Column(
                               children: <Widget>[
                                 Icon(Icons.shopping_cart),
