@@ -138,8 +138,11 @@ class _CategoryPageState extends State<CategoryPage>
                       ),
                     ),
                     SizedBox(
-                      height: ScreenAdapter.height(28),
-                      child: Text("${_rightCateData[index].title}"),
+                      height: ScreenAdapter.height(40),
+                      child: Text(
+                        "${_rightCateData[index].title}",
+                        maxLines: 1,
+                      ),
                     )
                   ],
                 ),

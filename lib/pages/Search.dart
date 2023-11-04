@@ -9,6 +9,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  String keywords = "";
+
   @override
   Widget build(BuildContext context) {
     ScreenAdapter.init(context);
@@ -23,9 +25,18 @@ class _SearchPageState extends State<SearchPage> {
           ),
           child: TextField(
             autofocus: true,
+            onChanged: (value) {
+              setState(() {
+                keywords = value;
+              });
+            },
+            // textAlign: TextAlign.center,
             decoration: InputDecoration(
-              border: InputBorder.none,
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
               hintText: '请输入搜索内容',
+              contentPadding: EdgeInsets.all(0),
               hintStyle: TextStyle(fontSize: ScreenAdapter.size(28)),
               prefixIcon: const Icon(
                 Icons.search,
@@ -37,12 +48,14 @@ class _SearchPageState extends State<SearchPage> {
         actions: [
           InkWell(
             onTap: () {
-              // 搜索
+              // 搜索,跳转到商品列表传递参数(替换)
+              Navigator.pushReplacementNamed(context, '/productList',
+                  arguments: {"keywords": keywords});
             },
-            child: Container(
+            child: SizedBox(
               height: ScreenAdapter.height(68),
               width: ScreenAdapter.width(80),
-              child: Row(
+              child: const Row(
                 children: [
                   Text(
                     "搜索",
@@ -57,10 +70,8 @@ class _SearchPageState extends State<SearchPage> {
         padding: EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            Container(
-              child: Text("热搜", style: TextStyle(fontSize: 20)),
-            ),
-            Divider(),
+            const Text("热搜", style: TextStyle(fontSize: 20)),
+            const Divider(),
             Wrap(
               children: <Widget>[
                 Container(
@@ -158,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                 height: ScreenAdapter.height(64),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black45, width: 1)),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[Icon(Icons.delete), Text("清空历史记录")],
                 ),
