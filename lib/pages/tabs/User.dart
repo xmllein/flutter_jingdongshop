@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/Counter.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -10,9 +13,10 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    var counterProvider = Provider.of<Counter>(context);
+    return Scaffold(
       body: Center(
-        child: Text('User Page'),
+        child: Text('User Page ${counterProvider.count}'),
       ),
     );
   }

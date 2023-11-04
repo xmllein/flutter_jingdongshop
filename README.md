@@ -18,7 +18,7 @@
 ## 项目完成进度
 
 - [x] 首页
-- [ ] 分类
+- [x] 分类
 - [ ] 购物车
 - [ ] 订单
 - [ ] 模拟支付
@@ -37,3 +37,5 @@
 - [Flutter 环境搭建 ForMac](https://juejin.cn/post/7017621020395700232)
 - [Flutter 仿京东商城项目实战](https://www.itying.com/goods-1120.html)
 - [Json 转 model](https://app.quicktype.io/)
+- [Flutter Ignoring ffi-1.12.2 because its extensions are not built. Try: gem pristine ffi --version 1.12.2](https://stackoverflow.com/questions/65387730/flutter-ignoring-ffi-1-12-2-because-its-extensions-are-not-built-try-gem-prist)
+- [Ignoring GEM because its extensions are not built](https://stackoverflow.com/questions/38797458/ignoring-gem-because-its-extensions-are-not-built)
