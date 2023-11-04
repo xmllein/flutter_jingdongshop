@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/model/ProductModel.dart';
 import 'package:flutter_jdshop/services/ScreenAdapter.dart';
+import 'package:flutter_jdshop/services/SearchServices.dart';
 import 'package:flutter_jdshop/widget/LoadingWidget.dart';
 
 import '../config/Config.dart';
@@ -401,6 +402,8 @@ class _ProductListPageState extends State<ProductListPage> {
         actions: [
           InkWell(
             onTap: () {
+              // 保存搜索记录
+              SearchServices.setHistoryData(_initKeywordsController.text);
               _subHeaderChange(1);
             },
             child: SizedBox(
