@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/pages/Cart/CartNum.dart';
 import 'package:flutter_jdshop/services/ScreenAdapter.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/Config.dart';
+import '../../provider/Cart.dart';
 
 class CartItem extends StatefulWidget {
   final Map _itemData;
@@ -29,6 +31,9 @@ class _CartItemState extends State<CartItem> {
     //处理图片
     String pic = _itemData["pic"];
     pic = Config.domain + pic.replaceAll('\\', '/');
+
+    var cartProvider = Provider.of<Cart>(context);
+
     return Container(
       height: ScreenAdapter.height(200),
       padding: const EdgeInsets.all(5),
@@ -42,8 +47,14 @@ class _CartItemState extends State<CartItem> {
           SizedBox(
             width: ScreenAdapter.width(60),
             child: Checkbox(
-              value: true,
-              onChanged: (val) {},
+              value: _itemData["checked"],
+              onChanged: (val) {
+                setState(() {
+                  _itemData["checked"] = val;
+                });
+
+                cartProvider.itemChageCheck();
+              },
               activeColor: Colors.pink,
             ),
           ),

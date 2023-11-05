@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_jdshop/services/ScreenAdapter.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/Cart.dart';
 
 class CartNum extends StatefulWidget {
   final Map _itemData;
+
   const CartNum(this._itemData, {Key? key}) : super(key: key);
 
   @override
@@ -12,6 +16,8 @@ class CartNum extends StatefulWidget {
 
 class _CartNumState extends State<CartNum> {
   Map _itemData = {};
+
+  var cartProvider;
 
   @override
   void initState() {
@@ -22,6 +28,8 @@ class _CartNumState extends State<CartNum> {
 
   @override
   Widget build(BuildContext context) {
+    cartProvider = Provider.of<Cart>(context);
+
     return Container(
       width: ScreenAdapter.width(164),
       decoration:
@@ -36,7 +44,14 @@ class _CartNumState extends State<CartNum> {
 
   Widget _leftBtn() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (_itemData["count"] > 1) {
+          setState(() {
+            _itemData["count"]--;
+          });
+          cartProvider.changeItemCount();
+        }
+      },
       child: Container(
         alignment: Alignment.center,
         width: ScreenAdapter.width(45),
@@ -49,7 +64,13 @@ class _CartNumState extends State<CartNum> {
   //右侧按钮
   Widget _rightBtn() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        setState(() {
+          _itemData["count"]++;
+        });
+        // 调用Provider更新数据
+        cartProvider.changeItemCount();
+      },
       child: Container(
         alignment: Alignment.center,
         width: ScreenAdapter.width(45),

@@ -64,9 +64,11 @@ class _CartPageState extends State<CartPage> {
                               SizedBox(
                                 width: ScreenAdapter.width(60),
                                 child: Checkbox(
-                                  value: true,
+                                  value: cartProvider.isCheckedAll,
                                   activeColor: Colors.pink,
-                                  onChanged: (val) {},
+                                  onChanged: (val) {
+                                    cartProvider.changeCheckAll(val!);
+                                  },
                                 ),
                               ),
                               const Text("全选")
