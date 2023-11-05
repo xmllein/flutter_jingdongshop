@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/Counter.dart';
+import '../../services/EventBus.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../services/UserServices.dart';
 import '../../widget/JdButton.dart';
@@ -22,6 +23,12 @@ class _UserPageState extends State<UserPage> {
     // TODO: implement initState
     super.initState();
     _getUserinfo();
+
+    //监听登录页面改变的事件
+    eventBus.on<UserEvent>().listen((event) {
+      print(event.str);
+      _getUserinfo();
+    });
   }
 
   _getUserinfo() async {
@@ -90,17 +97,17 @@ class _UserPageState extends State<UserPage> {
             ],
           ),
         ),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.assignment, color: Colors.red),
           title: Text("全部订单"),
         ),
-        Divider(),
-        ListTile(
+        const Divider(),
+        const ListTile(
           leading: Icon(Icons.payment, color: Colors.green),
           title: Text("待付款"),
         ),
         Divider(),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.local_car_wash, color: Colors.orange),
           title: Text("待收货"),
         ),
@@ -108,22 +115,22 @@ class _UserPageState extends State<UserPage> {
             width: double.infinity,
             height: 10,
             color: Color.fromRGBO(242, 242, 242, 0.9)),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.favorite, color: Colors.lightGreen),
           title: Text("我的收藏"),
         ),
-        Divider(),
-        ListTile(
+        const Divider(),
+        const ListTile(
           leading: Icon(Icons.people, color: Colors.black54),
           title: Text("在线客服"),
         ),
-        Divider(),
+        const Divider(),
         isLogin
             ? JdButton(
                 text: "退出登录",
                 cb: () {
                   UserServices.loginOut();
-                  this._getUserinfo();
+                  _getUserinfo();
                 },
               )
             : Text("")

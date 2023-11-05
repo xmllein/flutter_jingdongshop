@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../config/Config.dart';
+import '../services/EventBus.dart';
 import '../services/ScreenAdapter.dart';
+import '../services/Storage.dart';
 import '../widget/JdButton.dart';
 import '../widget/JdText.dart';
 
@@ -12,6 +19,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //监听登录页面销毁的事件
+  @override
+  dispose() {
+    super.dispose();
+    // 广播登录成功事件
+    eventBus.fire(new UserEvent('登录成功...'));
+  }
+
+  String username = '';
+  String password = '';
+
+  doLogin() async {
+    RegExp reg = new RegExp(r"^1\d{10}$");
+    if (!reg.hasMatch(username)) {
+      Fluttertoast.showToast(
+        msg: '手机号格式不对',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    } else if (password.length < 6) {
+      Fluttertoast.showToast(
+        msg: '密码不正确',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    } else {
+      var api = '${Config.domain}api/doLogin';
+      var response = await Dio()
+          .post(api, data: {"username": username, "password": password});
+      if (response.data["success"]) {
+        print(response.data);
+        //保存用户信息
+        Storage.setString('userInfo', json.encode(response.data["userinfo"]));
+
+        Navigator.pop(context);
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.data["message"]}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
             JdText(
               text: "请输入用户名",
               onChanged: (value) {
-                print(value);
+                username = value;
               },
             ),
             SizedBox(height: 10),
@@ -57,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               text: "请输入密码",
               password: true,
               onChanged: (value) {
-                print(value);
+                password = value;
               },
             ),
             SizedBox(height: 10),
@@ -86,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
               text: "登录",
               color: Colors.red,
               height: 74,
-              cb: () {},
+              cb: doLogin,
             )
           ],
         ),
