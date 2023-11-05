@@ -7,6 +7,7 @@ import '../pages/Address/AddressEdit.dart';
 import '../pages/Address/AddressList.dart';
 import '../pages/CheckOut.dart';
 import '../pages/Login.dart';
+import '../pages/Pay.dart';
 import '../pages/RegisterFirst.dart';
 import '../pages/RegisterSecond.dart';
 import '../pages/RegisterThird.dart';
@@ -32,9 +33,10 @@ final routes = {
   '/productContent': (context, {arguments}) =>
       ProductContentPage(arguments: arguments),
   '/checkOut': (context) => const CheckOutPage(),
-  '/addressAdd': (context) => AddressAddPage(),
-  '/addressEdit': (context) => AddressEditPage(),
-  '/addressList': (context) => AddressListPage(),
+  '/addressAdd': (context) => const AddressAddPage(),
+  '/addressEdit': (context) => const AddressEditPage(),
+  '/addressList': (context) => const AddressListPage(),
+  '/pay': (context) => const PayPage(),
 };
 
 // 固定写法
