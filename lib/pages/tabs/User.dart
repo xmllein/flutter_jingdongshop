@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../provider/Counter.dart';
 import '../../services/ScreenAdapter.dart';
+import '../../services/UserServices.dart';
+import '../../widget/JdButton.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -12,6 +14,26 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  bool isLogin = false;
+  List userInfo = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getUserinfo();
+  }
+
+  _getUserinfo() async {
+    var isLogin = await UserServices.getUserLoginState();
+    var userInfo = await UserServices.getUserInfo();
+
+    setState(() {
+      this.userInfo = userInfo;
+      this.isLogin = isLogin;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var counterProvider = Provider.of<Counter>(context);
@@ -37,33 +59,34 @@ class _UserPageState extends State<UserPage> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: Text("登录/注册", style: TextStyle(color: Colors.white)),
-                ),
-              )
-
-              // Expanded(
-              //   flex: 1,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: <Widget>[
-              //       Text("用户名：124124125",
-              //           style: TextStyle(
-              //               color: Colors.white,
-              //               fontSize: ScreenAdapter.size(32))),
-              //       Text("普通会员",
-              //           style: TextStyle(
-              //               color: Colors.white,
-              //               fontSize: ScreenAdapter.size(24))),
-              //     ],
-              //   ),
-              // )
+              !isLogin
+                  ? Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Text("登录/注册",
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    )
+                  : Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("用户名：${userInfo[0]["username"]}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenAdapter.size(32))),
+                          Text("普通会员",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenAdapter.size(24))),
+                        ],
+                      ),
+                    )
             ],
           ),
         ),
@@ -95,6 +118,15 @@ class _UserPageState extends State<UserPage> {
           title: Text("在线客服"),
         ),
         Divider(),
+        isLogin
+            ? JdButton(
+                text: "退出登录",
+                cb: () {
+                  UserServices.loginOut();
+                  this._getUserinfo();
+                },
+              )
+            : Text("")
       ],
     ));
   }

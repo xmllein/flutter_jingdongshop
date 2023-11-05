@@ -1,17 +1,86 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../config/Config.dart';
 import '../services/ScreenAdapter.dart';
 import '../widget/JdButton.dart';
 import '../widget/JdText.dart';
 
 class RegisterSecondPage extends StatefulWidget {
-  const RegisterSecondPage({super.key});
+  final Map arguments;
+
+  const RegisterSecondPage({super.key, required this.arguments});
 
   @override
   State<RegisterSecondPage> createState() => _RegisterSecondPageState();
 }
 
 class _RegisterSecondPageState extends State<RegisterSecondPage> {
+  late String tel;
+  bool sendCodeBtn = false;
+  int seconds = 10;
+  late String code;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tel = widget.arguments["tel"];
+    _showTimer();
+  }
+
+  //重新发送验证码
+  sendCode() async {
+    setState(() {
+      sendCodeBtn = false;
+      seconds = 10;
+      _showTimer();
+    });
+    var api = '${Config.domain}api/sendCode';
+    var response = await Dio().post(api, data: {"tel": tel});
+    if (response.data["success"]) {
+      print(response); //演示期间服务器直接返回  给手机发送的验证码
+    }
+  }
+
+  //倒计时
+  _showTimer() {
+    Timer? t;
+    t = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+      setState(() {
+        seconds--;
+      });
+      if (seconds == 0) {
+        //清除定时器
+        t!.cancel();
+
+        setState(() {
+          this.sendCodeBtn = true;
+        });
+      }
+    });
+  }
+
+  //验证验证码
+
+  validateCode() async {
+    var api = '${Config.domain}api/validateCode';
+    var response = await Dio().post(api, data: {"tel": tel, "code": code});
+    if (response.data["success"]) {
+      Navigator.pushNamed(context, '/registerThird',
+          arguments: {"tel": tel, "code": code});
+    } else {
+      Fluttertoast.showToast(
+        msg: '${response.data["message"]}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +94,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
             SizedBox(height: 50),
             Container(
               padding: EdgeInsets.only(left: 10),
-              child: Text("请输入xxx手机收到的验证码,请输入xxx手机收到的验证码"),
+              child: Text("验证码已经发送到了您的${tel}手机，请输入${tel}手机号收到的验证码"),
             ),
             SizedBox(height: 40),
             Stack(
@@ -33,17 +102,21 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 JdText(
                   text: "请输入验证码",
                   onChanged: (value) {
-                    print(value);
+                    code = value;
                   },
                 ),
                 Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ElevatedButton(
-                    child: Text('重新发送'),
-                    onPressed: () {},
-                  ),
-                )
+                    right: 0,
+                    top: 0,
+                    child: sendCodeBtn
+                        ? ElevatedButton(
+                            child: Text('重新发送'),
+                            onPressed: sendCode,
+                          )
+                        : ElevatedButton(
+                            child: Text('${seconds}秒后重发'),
+                            onPressed: () {},
+                          ))
               ],
             ),
             SizedBox(height: 20),
@@ -51,9 +124,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
               text: "下一步",
               color: Colors.red,
               height: 74,
-              cb: () {
-                Navigator.pushNamed(context, '/registerThird');
-              },
+              cb: validateCode,
             )
           ],
         ),

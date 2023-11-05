@@ -5,7 +5,7 @@ import 'package:flutter_jdshop/pages/tabs/Cart.dart';
 import '../pages/Login.dart';
 import '../pages/RegisterFirst.dart';
 import '../pages/RegisterSecond.dart';
-import '../pages/tabs/RegisterThird.dart';
+import '../pages/RegisterThird.dart';
 import '../pages/tabs/Tabs.dart';
 
 // 引入Search 页面
@@ -19,8 +19,10 @@ final routes = {
   '/cart': (context) => const CartPage(),
   '/login': (context) => const LoginPage(),
   '/registerFirst': (context) => const RegisterFirstPage(),
-  '/registerSecond': (context) => const RegisterSecondPage(),
-  '/registerThird': (context) => const RegisterThirdPage(),
+  '/registerSecond': (context, {arguments}) =>
+      RegisterSecondPage(arguments: arguments),
+  '/registerThird': (context, {arguments}) =>
+      RegisterThirdPage(arguments: arguments),
   '/productList': (context, {arguments}) =>
       ProductListPage(arguments: arguments),
   '/productContent': (context, {arguments}) =>
