@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
+import '../pages/CheckOut.dart';
 import '../pages/Login.dart';
 import '../pages/RegisterFirst.dart';
 import '../pages/RegisterSecond.dart';
@@ -27,6 +28,7 @@ final routes = {
       ProductListPage(arguments: arguments),
   '/productContent': (context, {arguments}) =>
       ProductContentPage(arguments: arguments),
+  '/checkOut': (context) => CheckOutPage(),
 };
 
 // 固定写法
