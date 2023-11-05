@@ -70,25 +70,27 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   color: Colors.white,
                   child: Column(
                     children: <Widget>[
+                      ListTile(
+                          leading: Icon(Icons.add_location),
+                          title: Center(
+                            child: Text("请添加收货地址"),
+                          ),
+                          trailing: Icon(Icons.navigate_next),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/addressList');
+                          }),
+                      // SizedBox(height: 10),
                       // ListTile(
-                      //   leading: Icon(Icons.add_location),
-                      //   title: Center(
-                      //     child: Text("请添加收货地址"),
+                      //   title: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: <Widget>[
+                      //       Text("张三  15201681234"),
+                      //       SizedBox(height: 10),
+                      //       Text("北京市海淀区西二旗"),
+                      //     ],
                       //   ),
                       //   trailing: Icon(Icons.navigate_next),
-                      // )
-                      SizedBox(height: 10),
-                      ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text("张三  15201681234"),
-                            SizedBox(height: 10),
-                            Text("北京市海淀区西二旗"),
-                          ],
-                        ),
-                        trailing: Icon(Icons.navigate_next),
-                      ),
+                      // ),
                       SizedBox(height: 10),
                     ],
                   ),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
+import '../pages/Address/AddressAdd.dart';
+import '../pages/Address/AddressEdit.dart';
+import '../pages/Address/AddressList.dart';
 import '../pages/CheckOut.dart';
 import '../pages/Login.dart';
 import '../pages/RegisterFirst.dart';
@@ -28,7 +31,10 @@ final routes = {
       ProductListPage(arguments: arguments),
   '/productContent': (context, {arguments}) =>
       ProductContentPage(arguments: arguments),
-  '/checkOut': (context) => CheckOutPage(),
+  '/checkOut': (context) => const CheckOutPage(),
+  '/addressAdd': (context) => AddressAddPage(),
+  '/addressEdit': (context) => AddressEditPage(),
+  '/addressList': (context) => AddressListPage(),
 };
 
 // 固定写法
