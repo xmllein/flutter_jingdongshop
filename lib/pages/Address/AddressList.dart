@@ -16,7 +16,7 @@ class _AddressListPageState extends State<AddressListPage> {
         appBar: AppBar(
           title: Text("收货地址列表"),
         ),
-        body: Container(
+        body: SafeArea(
           child: Stack(
             children: <Widget>[
               ListView(

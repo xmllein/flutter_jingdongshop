@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_jdshop/config/Config.dart';
 import 'package:flutter_jdshop/model/ProductModel.dart';
+import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import '../../services/ScreenAdapter.dart';
 
@@ -39,6 +40,8 @@ class _HomePageState extends State<HomePage>
     _getHotProductData();
     // 获取热门推荐商品
     _getBestProductData();
+
+    SignServices.getSign();
   }
 
   // 获取轮播数据
