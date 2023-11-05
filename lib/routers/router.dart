@@ -7,6 +7,8 @@ import '../pages/Address/AddressEdit.dart';
 import '../pages/Address/AddressList.dart';
 import '../pages/CheckOut.dart';
 import '../pages/Login.dart';
+import '../pages/Order.dart';
+import '../pages/OrderInfo.dart';
 import '../pages/Pay.dart';
 import '../pages/RegisterFirst.dart';
 import '../pages/RegisterSecond.dart';
@@ -37,6 +39,8 @@ final routes = {
   '/addressEdit': (context) => const AddressEditPage(),
   '/addressList': (context) => const AddressListPage(),
   '/pay': (context) => const PayPage(),
+  '/order': (context) => const OrderPage(),
+  '/orderinfo': (context) => const OrderInfoPage(),
 };
 
 // 固定写法
