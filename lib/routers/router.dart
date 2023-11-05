@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
+import '../pages/Login.dart';
+import '../pages/RegisterFirst.dart';
+import '../pages/RegisterSecond.dart';
+import '../pages/tabs/RegisterThird.dart';
 import '../pages/tabs/Tabs.dart';
 
 // 引入Search 页面
@@ -13,6 +17,10 @@ final routes = {
   '/': (context) => const Tabs(),
   '/search': (context, {arguments}) => SearchPage(arguments: arguments),
   '/cart': (context) => const CartPage(),
+  '/login': (context) => const LoginPage(),
+  '/registerFirst': (context) => const RegisterFirstPage(),
+  '/registerSecond': (context) => const RegisterSecondPage(),
+  '/registerThird': (context) => const RegisterThirdPage(),
   '/productList': (context, {arguments}) =>
       ProductListPage(arguments: arguments),
   '/productContent': (context, {arguments}) =>
