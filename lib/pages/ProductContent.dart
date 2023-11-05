@@ -5,9 +5,12 @@ import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/ProductContent/Product.dart';
 import 'package:flutter_jdshop/pages/ProductContent/ProductComment.dart';
 import 'package:flutter_jdshop/pages/ProductContent/ProductDetail.dart';
+import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/services/ScreenAdapter.dart';
 import 'package:flutter_jdshop/widget/LoadingWidget.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/Cart.dart';
 import '../widget/JdButton.dart';
 
 // 广播
@@ -46,6 +49,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
   @override
   Widget build(BuildContext context) {
     ScreenAdapter.init(context);
+    var cartProvider = Provider.of<Cart>(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -141,12 +145,16 @@ class _ProductContentPageState extends State<ProductContentPage> {
                             child: JdButton(
                               color: const Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
-                              cb: () {
+                              cb: () async {
                                 if (_productContentList[0].attr.length > 0) {
                                   //广播 弹出筛选
                                   eventBus.fire(ProductContentEvent('加入购物车'));
                                 } else {
-                                  print("加入购物车操作");
+                                  await CartServices.addCart(
+                                      _productContentList[0]);
+                                  // 调用Provider更新数据
+                                  //调用Provider 更新数据
+                                  cartProvider.updateCartList();
                                 }
                               },
                             ),

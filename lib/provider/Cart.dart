@@ -1,19 +1,34 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/services/Storage.dart';
 
 class Cart with ChangeNotifier {
-  List _cartList = []; //状态
-  // int _cartNum=0;
+  List _cartList = []; // 状态
 
-  int get cartNum => _cartList.length;
-  List get cartList => _cartList;
+  List get cartList => _cartList; // 获取状态
 
-  addData(value) {
-    _cartList.add(value);
+  Cart() {
+    init();
+  }
+
+  // 初始化
+  init() async {
+    // Storage.remove('cartList');
+    // 获取本地存储的数据
+    try {
+      List cartListData =
+          json.decode(await Storage.getString('cartList') as String);
+      _cartList = cartListData;
+    } catch (e) {
+      _cartList = [];
+    }
     notifyListeners();
   }
 
-  deleteData(value) {
-    _cartList.remove(value);
-    notifyListeners();
+  // 更新数据
+  updateCartList() {
+    // 重新获取数据
+    init();
   }
 }

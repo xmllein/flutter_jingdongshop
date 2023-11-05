@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../model/ProductContentModel.dart';
 import '../../pages/ProductContent/CartNum.dart';
 
 import '../../config/Config.dart';
+import '../../provider/Cart.dart';
 import '../../services/CartServices.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../widget/JdButton.dart';
@@ -35,6 +37,8 @@ class _ProductPageState extends State<ProductPage>
 
   // 监听广播
   var actionEventBus;
+
+  var _cartProvider;
 
   @override
   initState() {
@@ -223,6 +227,7 @@ class _ProductPageState extends State<ProductPage>
                                 CartServices.addCart(_productContent);
                                 //关闭底部筛选属性
                                 Navigator.of(context).pop();
+                                _cartProvider.updateCartList();
                               },
                             ),
                           ),
@@ -254,6 +259,8 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    _cartProvider = Provider.of<Cart>(context);
     // 处理图片显示
     String pic = _productContent.pic;
     pic = Config.domain + pic.replaceAll('\\', '/');

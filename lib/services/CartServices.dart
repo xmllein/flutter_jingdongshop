@@ -1,16 +1,49 @@
+import 'dart:convert';
+
+import 'package:flutter_jdshop/services/Storage.dart';
+
+import '../config/Config.dart';
+
 class CartServices {
-  static addCart(item) {
+  static addCart(item) async {
     //把对象转换成Map类型的数据
     item = CartServices.formatCartData(item);
+    // 获取本地储存的数据
+    try {
+      List cartListData =
+          json.decode(await Storage.getString('cartList') as String);
+      //  判断是否有重复数据
+      bool hasData = cartListData.any((value) {
+        return value['_id'] == item['_id'] &&
+            value['selectedAttr'] == item['selectedAttr'];
+      });
 
-    print(item);
-
-//     {_id: 5a0425bc010e711234661439, title: 磨砂牛皮男休闲鞋-有属性, price: 688, selectedAttr: 牛皮 ,系带,黄色, count: 3, pic: public\upload\RinsvExKu7Ed-oc
-// s_7W1DxYO.png, checked: true}
+      // 有数据
+      if (hasData) {
+        for (var i = 0; i < cartListData.length; i++) {
+          if (cartListData[i]['_id'] == item['_id'] &&
+              cartListData[i]['selectedAttr'] == item['selectedAttr']) {
+            cartListData[i]['count'] = cartListData[i]['count'] + 1;
+          }
+        }
+        await Storage.setString('cartList', json.encode(cartListData));
+      } else {
+        cartListData.add(item);
+        await Storage.setString('cartList', json.encode(cartListData));
+      }
+    } catch (e) {
+      // 临时变量
+      List tempList = [];
+      tempList.add(item);
+      print(item);
+      await Storage.setString('cartList', json.encode(tempList));
+    }
   }
 
   //过滤数据
   static formatCartData(item) {
+    // 处理图片
+
     final Map data = <String, dynamic>{};
     data['_id'] = item.id;
     data['title'] = item.title;

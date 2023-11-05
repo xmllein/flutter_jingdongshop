@@ -3,13 +3,23 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_jdshop/services/ScreenAdapter.dart';
 
 class CartNum extends StatefulWidget {
-  const CartNum({Key? key}) : super(key: key);
+  final Map _itemData;
+  const CartNum(this._itemData, {Key? key}) : super(key: key);
 
   @override
   _CartNumState createState() => _CartNumState();
 }
 
 class _CartNumState extends State<CartNum> {
+  Map _itemData = {};
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _itemData = widget._itemData;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +70,7 @@ class _CartNumState extends State<CartNum> {
         right: BorderSide(width: 1, color: Colors.black12),
       )),
       height: ScreenAdapter.height(45),
-      child: Text("1"),
+      child: Text("${_itemData["count"]}"),
     );
   }
 }
