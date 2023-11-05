@@ -183,7 +183,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
             const Text("热搜", style: TextStyle(fontSize: 20)),
@@ -191,64 +191,64 @@ class _SearchPageState extends State<SearchPage> {
             Wrap(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装"),
+                  child: const Text("女装"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装"),
+                  child: const Text("女装"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("笔记本电脑"),
+                  child: const Text("笔记本电脑"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装111"),
+                  child: const Text("女装111"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装"),
+                  child: const Text("女装"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装"),
+                  child: const Text("女装"),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 233, 233, 0.9),
+                      color: const Color.fromRGBO(233, 233, 233, 0.9),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Text("女装"),
+                  child: const Text("女装"),
                 )
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _historyListWidget(),
           ],
         ),

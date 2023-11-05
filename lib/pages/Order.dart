@@ -1,6 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/model/OrderModel.dart';
 
+import '../config/Config.dart';
 import '../services/ScreenAdapter.dart';
+import '../services/SignServices.dart';
+import '../services/UserServices.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -10,11 +15,63 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  List _orderList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getListData();
+  }
+
+  // 获取订单列表数据
+  void _getListData() async {
+    List userinfo = await UserServices.getUserInfo();
+    var tempJson = {"uid": userinfo[0]['_id'], "salt": userinfo[0]["salt"]};
+    var sign = SignServices.getSign(tempJson);
+    var api =
+        '${Config.domain}api/orderList?uid=${userinfo[0]['_id']}&sign=${sign}';
+    var response = await Dio().get(api);
+    setState(() {
+      var orderMode = OrderModel.fromJson(response.data);
+      _orderList = orderMode.result;
+    });
+  }
+
+  //自定义商品列表组件
+  List<Widget> _orderItemWidget(orderItems) {
+    List<Widget> tempList = [];
+    for (var i = 0; i < orderItems.length; i++) {
+      // 图片转换格式
+      String pic = orderItems[i].productImg;
+      pic = Config.domain + pic.replaceAll('\\', '/');
+      tempList.add(Column(
+        children: <Widget>[
+          const SizedBox(height: 10),
+          ListTile(
+            leading: SizedBox(
+              width: ScreenAdapter.width(120),
+              height: ScreenAdapter.height(120),
+              child: Image.network(
+                pic,
+                fit: BoxFit.cover,
+              ),
+            ),
+            title: Text("${orderItems[i].productTitle}"),
+            trailing: Text('x${orderItems[i].productCount}'),
+          ),
+          const SizedBox(height: 10)
+        ],
+      ));
+    }
+    return tempList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("我的订单"),
+        title: const Text("我的订单"),
       ),
       body: Stack(
         children: <Widget>[
@@ -22,164 +79,38 @@ class _OrderPageState extends State<OrderPage> {
             margin: EdgeInsets.fromLTRB(0, ScreenAdapter.height(80), 0, 0),
             padding: EdgeInsets.all(ScreenAdapter.width(16)),
             child: ListView(
-              children: <Widget>[
-                Card(
+                children: _orderList.map((value) {
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/orderinfo');
+                },
+                child: Card(
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        title: Text("订单编号：xxxxxxxx"),
+                        title: Text("订单编号：${value.id}",
+                            style: const TextStyle(color: Colors.black54)),
                       ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教"),
-                        trailing: Text('x1'),
+                      const Divider(),
+                      Column(
+                        children: _orderItemWidget(value.orderItem),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教t入门实战视"),
-                        trailing: Text('x1'),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/orderinfo');
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Text("合计：￥345"),
+                        leading: Text("合计：￥${value.allPrice}"),
                         trailing: ElevatedButton(
-                          child: Text("申请售后"),
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                            textStyle: MaterialStateProperty.all(
-                              TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text("订单编号：xxxxxxxx"),
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教"),
-                        trailing: Text('x1'),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/orderinfo');
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教t入门实战视"),
-                        trailing: Text('x1'),
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Text("合计：￥345"),
-                        trailing: ElevatedButton(
-                          child: Text("申请售后"),
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                            textStyle: MaterialStateProperty.all(
-                              TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text("订单编号：xxxxxxxx"),
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教"),
-                        trailing: Text('x1'),
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Container(
-                          width: ScreenAdapter.width(120),
-                          height: ScreenAdapter.height(120),
-                          child: Image.network(
-                            'https://www.itying.com/images/flutter/list2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text("6小时学会TypeScript入门实战视频教t入门实战视"),
-                        trailing: Text('x1'),
-                      ),
-                      SizedBox(height: 10),
-                      ListTile(
-                        leading: Text("合计：￥345"),
-                        trailing: ElevatedButton(
-                            child: Text("申请售后"),
-                            onPressed: () {},
-                            style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue),
-                              textStyle: MaterialStateProperty.all(
-                                TextStyle(color: Colors.black),
-                              ),
-                            )),
+                                  MaterialStateProperty.all(Colors.blue)),
+                          child: const Text("申请售后"),
+                        ),
                       ),
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              );
+            }).toList()),
           ),
           Positioned(
             top: 0,
@@ -189,7 +120,7 @@ class _OrderPageState extends State<OrderPage> {
               width: ScreenAdapter.width(750),
               height: ScreenAdapter.height(76),
               color: Colors.white,
-              child: Row(
+              child: const Row(
                 children: <Widget>[
                   Expanded(
                     child: Text("全部", textAlign: TextAlign.center),

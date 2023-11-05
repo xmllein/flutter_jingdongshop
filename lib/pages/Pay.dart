@@ -43,8 +43,8 @@ class _PayPageState extends State<PayPage> {
                         leading: Image.network("${payList[index]["image"]}"),
                         title: Text("${payList[index]["title"]}"),
                         trailing: payList[index]["chekced"]
-                            ? Icon(Icons.check)
-                            : Text(""),
+                            ? const Icon(Icons.check)
+                            : const Text(""),
                         onTap: () {
                           //让payList里面的checked都等于false
                           setState(() {

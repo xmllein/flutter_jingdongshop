@@ -47,20 +47,20 @@ class _RegisterFirstPageState extends State<RegisterFirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("用户注册-第一步"),
+        title: const Text("用户注册-第一步"),
       ),
       body: Container(
         padding: EdgeInsets.all(ScreenAdapter.width(20)),
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             JdText(
               text: "请输入手机号",
               onChanged: (value) {
                 tel = value;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             JdButton(
               text: "下一步",
               color: Colors.red,

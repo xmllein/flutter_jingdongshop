@@ -24,14 +24,14 @@ class _LoginPageState extends State<LoginPage> {
   dispose() {
     super.dispose();
     // 广播登录成功事件
-    eventBus.fire(new UserEvent('登录成功...'));
+    eventBus.fire(UserEvent('登录成功...'));
   }
 
   String username = '';
   String password = '';
 
   doLogin() async {
-    RegExp reg = new RegExp(r"^1\d{10}$");
+    RegExp reg = RegExp(r"^1\d{10}$");
     if (!reg.hasMatch(username)) {
       Fluttertoast.showToast(
         msg: '手机号格式不对',
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
         // title: Text("登录页面"),
         actions: <Widget>[
           ElevatedButton(
-            child: Text("客服"),
+            child: const Text("客服"),
             onPressed: () {},
           )
         ],
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Center(
               child: Container(
-                margin: EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 30),
                 height: ScreenAdapter.width(160),
                 width: ScreenAdapter.width(160),
                 // child: Image.asset('images/login.png'),
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.cover),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             JdText(
               text: "请输入用户名",
               onChanged: (value) {
@@ -112,12 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                 password = value;
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               padding: EdgeInsets.all(ScreenAdapter.width(20)),
               child: Stack(
                 children: <Widget>[
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('忘记密码'),
                   ),
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             JdButton(
               text: "登录",
               color: Colors.red,

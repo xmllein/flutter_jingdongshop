@@ -91,12 +91,12 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
         padding: EdgeInsets.all(ScreenAdapter.width(20)),
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Container(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Text("验证码已经发送到了您的${tel}手机，请输入${tel}手机号收到的验证码"),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Stack(
               children: <Widget>[
                 JdText(
@@ -110,8 +110,8 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     top: 0,
                     child: sendCodeBtn
                         ? ElevatedButton(
-                            child: Text('重新发送'),
                             onPressed: sendCode,
+                            child: Text('重新发送'),
                           )
                         : ElevatedButton(
                             child: Text('${seconds}秒后重发'),
@@ -119,7 +119,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                           ))
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             JdButton(
               text: "下一步",
               color: Colors.red,
