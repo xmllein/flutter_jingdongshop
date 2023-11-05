@@ -23,11 +23,11 @@ class _CartItemState extends State<CartItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _itemData = widget._itemData;
   }
 
   @override
   Widget build(BuildContext context) {
+    _itemData = widget._itemData;
     //处理图片
     String pic = _itemData["pic"];
     pic = Config.domain + pic.replaceAll('\\', '/');

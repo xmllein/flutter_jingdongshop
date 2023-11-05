@@ -133,11 +133,16 @@ class _ProductContentPageState extends State<ProductContentPage> {
                                 EdgeInsets.only(top: ScreenAdapter.height(10)),
                             width: 100,
                             height: ScreenAdapter.height(146),
-                            child: const Column(
-                              children: <Widget>[
-                                Icon(Icons.shopping_cart),
-                                Text("购物车")
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/cart');
+                              },
+                              child: const Column(
+                                children: <Widget>[
+                                  Icon(Icons.shopping_cart),
+                                  Text("购物车")
+                                ],
+                              ),
                             ),
                           ),
                           Expanded(

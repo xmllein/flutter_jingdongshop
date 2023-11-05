@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../model/ProductContentModel.dart';
 import '../../pages/ProductContent/CartNum.dart';
@@ -52,7 +53,6 @@ class _ProductPageState extends State<ProductPage>
     _initAttr();
 
     actionEventBus = eventBus.on<ProductContentEvent>().listen((str) {
-      print(str);
       _attrBottomSheet();
     });
   }
@@ -130,7 +130,9 @@ class _ProductPageState extends State<ProductPage>
             _changeAttr(attrItem.cate, item["title"], setBottomState);
           },
           child: Chip(
-            label: Text("${item["title"]}"),
+            label: Text("${item["title"]}",
+                style: TextStyle(
+                    color: item["checked"] ? Colors.white : Colors.black54)),
             padding: const EdgeInsets.all(10),
             backgroundColor: item["checked"] ? Colors.red : Colors.black26,
           ),
@@ -223,11 +225,20 @@ class _ProductPageState extends State<ProductPage>
                             child: JdButton(
                               color: const Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
-                              cb: () {
-                                CartServices.addCart(_productContent);
+                              cb: () async {
+                                await CartServices.addCart(_productContent);
                                 //关闭底部筛选属性
                                 Navigator.of(context).pop();
                                 _cartProvider.updateCartList();
+
+                                Fluttertoast.showToast(
+                                    msg: "加入购物车成功",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                               },
                             ),
                           ),

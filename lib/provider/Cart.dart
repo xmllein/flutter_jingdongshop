@@ -4,14 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/services/Storage.dart';
 
 class Cart with ChangeNotifier {
-  List _cartList = []; //
+  // 购物车数据
+  List _cartList = [];
 
   // 全选
   bool _isCheckedAll = false;
 
+  // 总价
+  double _allPrice = 0;
+
+  List get cartList => _cartList;
+
   bool get isCheckedAll => _isCheckedAll;
 
-  List get cartList => _cartList; // 获取状态
+  double get allPrice => _allPrice;
 
   Cart() {
     init();
@@ -31,7 +37,8 @@ class Cart with ChangeNotifier {
 
     // 判断是否全选
     _isCheckedAll = isCheckAll();
-
+    // 计算总价
+    computeAllPrice();
     notifyListeners();
   }
 
@@ -44,6 +51,8 @@ class Cart with ChangeNotifier {
   // 改变数量，重新保存
   changeItemCount() {
     Storage.setString("cartList", json.encode(_cartList));
+    // 计算总价
+    computeAllPrice();
     notifyListeners();
   }
 
@@ -54,6 +63,8 @@ class Cart with ChangeNotifier {
     }
     _isCheckedAll = flag;
     Storage.setString("cartList", json.encode(_cartList));
+    // 计算总价
+    computeAllPrice();
     notifyListeners();
   }
 
@@ -71,7 +82,12 @@ class Cart with ChangeNotifier {
     } else {
       _isCheckedAll = false;
     }
+
+    // 计算总价
+    computeAllPrice();
     notifyListeners();
+
+    return _isCheckedAll;
   }
 
   // 监听单个checkbox 改变
@@ -81,6 +97,9 @@ class Cart with ChangeNotifier {
     } else {
       _isCheckedAll = false;
     }
+
+    // 计算总价
+    computeAllPrice();
     Storage.setString("cartList", json.encode(_cartList));
     notifyListeners();
   }
@@ -113,6 +132,18 @@ class Cart with ChangeNotifier {
   // 改变checkbox 状态
   changeCheckState() {
     Storage.setString("cartList", json.encode(_cartList));
+    notifyListeners();
+  }
+
+  // 计算总价
+  computeAllPrice() {
+    double tempAllPrice = 0;
+    for (var i = 0; i < _cartList.length; i++) {
+      if (_cartList[i]["checked"] == true) {
+        tempAllPrice += _cartList[i]["price"] * _cartList[i]["count"];
+      }
+    }
+    _allPrice = tempAllPrice;
     notifyListeners();
   }
 }

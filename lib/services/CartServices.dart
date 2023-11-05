@@ -35,7 +35,6 @@ class CartServices {
       // 临时变量
       List tempList = [];
       tempList.add(item);
-      print(item);
       await Storage.setString('cartList', json.encode(tempList));
     }
   }
@@ -47,7 +46,12 @@ class CartServices {
     final Map data = <String, dynamic>{};
     data['_id'] = item.id;
     data['title'] = item.title;
-    data['price'] = item.price;
+    if (item.price is int || item.price is double) {
+      data['price'] = item.price;
+    } else {
+      data['price'] = double.parse(item.price);
+    }
+    // data['price'] = item.price;
     data['selectedAttr'] = item.selectedAttr;
     data['count'] = item.count;
     data['pic'] = item.pic;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
+import 'package:flutter_jdshop/pages/tabs/Cart.dart';
 import '../pages/tabs/Tabs.dart';
 
 // 引入Search 页面
@@ -11,6 +12,7 @@ import '../pages/Search.dart';
 final routes = {
   '/': (context) => const Tabs(),
   '/search': (context, {arguments}) => SearchPage(arguments: arguments),
+  '/cart': (context) => const CartPage(),
   '/productList': (context, {arguments}) =>
       ProductListPage(arguments: arguments),
   '/productContent': (context, {arguments}) =>
