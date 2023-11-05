@@ -1,7 +1,12 @@
 import 'package:city_pickers/city_pickers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../config/Config.dart';
+import '../../services/EventBus.dart';
 import '../../services/ScreenAdapter.dart';
+import '../../services/SignServices.dart';
+import '../../services/UserServices.dart';
 import '../../widget/JdButton.dart';
 import '../../widget/JdText.dart';
 
@@ -14,6 +19,22 @@ class AddressAddPage extends StatefulWidget {
 
 class _AddressAddPageState extends State<AddressAddPage> {
   String area = '';
+
+  // 用户名
+  String name = '';
+
+  // 电话
+  String phone = '';
+
+  // 详细地址
+  String address = '';
+
+  //监听页面销毁的事件
+  @override
+  dispose() {
+    super.dispose();
+    eventBus.fire(new AddressEvent('增加成功...'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +49,16 @@ class _AddressAddPageState extends State<AddressAddPage> {
               SizedBox(height: 20),
               JdText(
                 text: "收货人姓名",
+                onChanged: (value) {
+                  name = value;
+                },
               ),
               SizedBox(height: 10),
               JdText(
                 text: "收货人电话",
+                onChanged: (value) {
+                  phone = value;
+                },
               ),
               SizedBox(height: 10),
               Container(
@@ -75,13 +102,46 @@ class _AddressAddPageState extends State<AddressAddPage> {
                 text: "详细地址",
                 maxLines: 4,
                 height: 200,
+                onChanged: (value) {
+                  address = "$area $value";
+                },
               ),
               SizedBox(height: 10),
               SizedBox(height: 40),
               JdButton(
                 text: "增加",
                 color: Colors.red,
-                cb: () {},
+                cb: () async {
+                  List userinfo = await UserServices.getUserInfo();
+
+                  print(userinfo);
+
+                  // print('1234');
+                  var tempJson = {
+                    "uid": userinfo[0]["_id"],
+                    "name": this.name,
+                    "phone": this.phone,
+                    "address": this.address,
+                    "salt": userinfo[0]["salt"]
+                  };
+
+                  var sign = SignServices.getSign(tempJson);
+                  // print(sign);
+
+                  var api = '${Config.domain}api/addAddress';
+                  var result = await Dio().post(api, data: {
+                    "uid": userinfo[0]["_id"],
+                    "name": name,
+                    "phone": phone,
+                    "address": address,
+                    "sign": sign
+                  });
+
+                  // if(result.data["success"]){
+
+                  // }
+                  Navigator.pop(context);
+                },
               )
             ],
           ),

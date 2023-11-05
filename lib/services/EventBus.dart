@@ -17,3 +17,9 @@ class UserEvent {
 
   UserEvent(this.str);
 }
+
+// 添加收货地址
+class AddressEvent {
+  String str;
+  AddressEvent(this.str);
+}
