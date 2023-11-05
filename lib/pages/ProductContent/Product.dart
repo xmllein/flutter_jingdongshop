@@ -194,21 +194,16 @@ class _ProductPageState extends State<ProductPage>
                         Container(
                           margin: const EdgeInsets.only(top: 10),
                           height: ScreenAdapter.height(80),
-                          child: InkWell(
-                            onTap: () {
-                              _attrBottomSheet();
-                            },
-                            child: Row(
-                              children: <Widget>[
-                                const Text("数量: ",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                                const SizedBox(width: 10),
-                                CartNum(_productContent)
-                              ],
-                            ),
+                          child: Row(
+                            children: <Widget>[
+                              const Text("数量: ",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              CartNum(_productContent)
+                            ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

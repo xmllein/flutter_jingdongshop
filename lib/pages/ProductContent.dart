@@ -109,12 +109,15 @@ class _ProductContentPageState extends State<ProductContentPage> {
         body: _productContentList.isNotEmpty
             ? Stack(
                 children: [
-                  TabBarView(children: [
-                    // 消除警告
-                    ProductPage(_productContentList),
-                    ProductDetailPage(_productContentList),
-                    ProductCommentPage(),
-                  ]),
+                  TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      // 消除警告
+                      ProductPage(_productContentList),
+                      ProductDetailPage(_productContentList),
+                      const ProductCommentPage(),
+                    ],
+                  ),
                   Positioned(
                     width: ScreenAdapter.width(750),
                     height: ScreenAdapter.width(146),
