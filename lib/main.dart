@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/provider/Cart.dart';
+import 'package:flutter_jdshop/provider/CheckOut.dart';
 import 'package:flutter_jdshop/provider/Counter.dart';
 
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => Counter()),
         ChangeNotifierProvider(create: (_) => Cart()),
+        ChangeNotifierProvider(create: (_) => CheckOut())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
