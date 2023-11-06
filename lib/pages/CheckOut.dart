@@ -194,7 +194,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.red)),
                         onPressed: () async {
-                          if (_addressList.length > 0) {
+                          if (_addressList.isNotEmpty) {
                             List userinfo = await UserServices.getUserInfo();
                             //注意：商品总价保留一位小数
                             var allPrice = CheckOutServices.getAllPrice(

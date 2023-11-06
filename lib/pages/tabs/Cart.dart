@@ -120,11 +120,11 @@ class _CartPageState extends State<CartPage> {
                                     },
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   "全选",
                                 ),
                                 const SizedBox(width: 20),
-                                Text(
+                                const Text(
                                   "合计：",
                                 ),
                                 Text(
@@ -145,7 +145,7 @@ class _CartPageState extends State<CartPage> {
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: Size(100, 40),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "结算",
                                       style: TextStyle(
                                           // fontSize: ScreenAdapter.size(20),
@@ -157,7 +157,7 @@ class _CartPageState extends State<CartPage> {
                                       primary: Colors.red,
                                       fixedSize: Size(100, 40),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "删除",
                                       style: TextStyle(
                                         color: Colors.white,
