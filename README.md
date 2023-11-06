@@ -37,5 +37,8 @@
 - [Flutter 环境搭建 ForMac](https://juejin.cn/post/7017621020395700232)
 - [Flutter 仿京东商城项目实战](https://www.itying.com/goods-1120.html)
 - [Json 转 model](https://app.quicktype.io/)
+- [图标工场](https://icon.wuruihong.com/)
+- [Flutter 集成与打包 iOS 应用](https://johns.blog.csdn.net/article/details/122146619)
+- [Flutter 集成与打包 Android 应用](https://blog.csdn.net/nicepainkiller/article/details/122146356)
 - [Flutter Ignoring ffi-1.12.2 because its extensions are not built. Try: gem pristine ffi --version 1.12.2](https://stackoverflow.com/questions/65387730/flutter-ignoring-ffi-1-12-2-because-its-extensions-are-not-built-try-gem-prist)
 - [Ignoring GEM because its extensions are not built](https://stackoverflow.com/questions/38797458/ignoring-gem-because-its-extensions-are-not-built)

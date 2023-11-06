@@ -66,11 +66,56 @@ class _AddressListPageState extends State<AddressListPage> {
     Navigator.pop(context);
   }
 
+  //删除收货地址
+  _delAddress(id) async {
+    List userinfo = await UserServices.getUserInfo();
+    var tempJson = {
+      "uid": userinfo[0]["_id"],
+      "id": id,
+      "salt": userinfo[0]["salt"]
+    };
+    var sign = SignServices.getSign(tempJson);
+
+    var api = '${Config.domain}api/deleteAddress';
+    var response = await Dio()
+        .post(api, data: {"uid": userinfo[0]["_id"], "id": id, "sign": sign});
+    _getAddressList(); //删除收货地址完成后重新获取列表
+  }
+
+  //弹出框
+  _showDelAlertDialog(id) async {
+    var result = await showDialog(
+        barrierDismissible: false, //表示点击灰色背景的时候是否消失弹出框
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("提示信息!"),
+            content: const Text("您确定要删除吗?"),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("取消"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ElevatedButton(
+                child: const Text("确定"),
+                onPressed: () async {
+                  //执行删除操作
+                  _delAddress(id);
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("收货地址列表"),
+          title: const Text("收货地址列表"),
         ),
         body: SafeArea(
           child: Stack(
@@ -83,21 +128,35 @@ class _AddressListPageState extends State<AddressListPage> {
                       children: <Widget>[
                         const SizedBox(height: 20),
                         ListTile(
-                          leading: Icon(Icons.check, color: Colors.red),
+                          leading: const Icon(Icons.check, color: Colors.red),
                           title: InkWell(
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                      "${addressList[index]["name"]}  ${this.addressList[index]["phone"]}"),
+                                      "${addressList[index]["name"]}  ${addressList[index]["phone"]}"),
                                   const SizedBox(height: 10),
                                   Text("${addressList[index]["address"]}"),
                                 ]),
                             onTap: () {
                               _changeDefaultAddress(addressList[index]["_id"]);
                             },
+                            onLongPress: () {
+                              _showDelAlertDialog(addressList[index]["_id"]);
+                            },
                           ),
-                          trailing: Icon(Icons.edit, color: Colors.blue),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/addressEdit',
+                                  arguments: {
+                                    "id": addressList[index]["_id"],
+                                    "name": addressList[index]["name"],
+                                    "phone": addressList[index]["phone"],
+                                    "address": addressList[index]["address"],
+                                  });
+                            },
+                          ),
                         ),
                         const Divider(height: 20),
                       ],
@@ -119,8 +178,22 @@ class _AddressListPageState extends State<AddressListPage> {
                             onTap: () {
                               _changeDefaultAddress(addressList[index]["_id"]);
                             },
+                            onLongPress: () {
+                              _showDelAlertDialog(addressList[index]["_id"]);
+                            },
                           ),
-                          trailing: const Icon(Icons.edit, color: Colors.blue),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/addressEdit',
+                                  arguments: {
+                                    "id": addressList[index]["_id"],
+                                    "name": addressList[index]["name"],
+                                    "phone": addressList[index]["phone"],
+                                    "address": addressList[index]["address"],
+                                  });
+                            },
+                          ),
                         ),
                         const Divider(height: 20),
                       ],

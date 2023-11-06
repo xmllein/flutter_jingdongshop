@@ -36,7 +36,8 @@ final routes = {
       ProductContentPage(arguments: arguments),
   '/checkOut': (context) => const CheckOutPage(),
   '/addressAdd': (context) => const AddressAddPage(),
-  '/addressEdit': (context) => const AddressEditPage(),
+  '/addressEdit': (context, {arguments}) =>
+      AddressEditPage(arguments: arguments),
   '/addressList': (context) => const AddressListPage(),
   '/pay': (context) => const PayPage(),
   '/order': (context) => const OrderPage(),

@@ -93,7 +93,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                   Positioned(
                     width: ScreenAdapter.width(750),
-                    height: ScreenAdapter.height(78),
+                    height: ScreenAdapter.height(100),
                     bottom: 0,
                     child: Container(
                       decoration: const BoxDecoration(
@@ -102,8 +102,8 @@ class _CartPageState extends State<CartPage> {
                         color: Colors.white,
                       ),
                       width: ScreenAdapter.width(750),
-                      height: ScreenAdapter.height(78),
-                      padding: const EdgeInsets.fromLTRB(0, 13, 10, 13),
+                      height: ScreenAdapter.height(100),
+                      padding: const EdgeInsets.all(5),
                       child: Stack(
                         children: <Widget>[
                           Align(
@@ -120,13 +120,19 @@ class _CartPageState extends State<CartPage> {
                                     },
                                   ),
                                 ),
-                                const Text("全选"),
+                                Text(
+                                  "全选",
+                                ),
                                 const SizedBox(width: 20),
-                                Text("合计："),
+                                Text(
+                                  "合计：",
+                                ),
                                 Text(
                                   "￥${cartProvider.allPrice}",
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: ScreenAdapter.size(36),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
                                 )
                               ],
                             ),
@@ -135,18 +141,28 @@ class _CartPageState extends State<CartPage> {
                             alignment: Alignment.centerRight,
                             child: _isEdit
                                 ? ElevatedButton(
-                                    child: const Text(
-                                      "结算",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
                                     onPressed: doCheckOut,
+                                    style: ElevatedButton.styleFrom(
+                                      fixedSize: Size(100, 40),
+                                    ),
+                                    child: Text(
+                                      "结算",
+                                      style: TextStyle(
+                                          // fontSize: ScreenAdapter.size(20),
+                                          color: Colors.white),
+                                    ),
                                   )
                                 : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: Colors.red),
-                                    child: const Text(
+                                      primary: Colors.red,
+                                      fixedSize: Size(100, 40),
+                                    ),
+                                    child: Text(
                                       "删除",
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        // fontSize: ScreenAdapter.size(20),
+                                      ),
                                     ),
                                     onPressed: () {
                                       cartProvider.removeItem();
